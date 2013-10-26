@@ -270,6 +270,7 @@ int play_h264_stream (simple_window_form* pform)
 	// 注册解码组件
 	av_register_all();
 	avcodec_register_all();
+	::Sleep(20);
 
 	// 加载h264文件
 	status = avformat_open_input (&format_context,AV_FILE_NAME,NULL,NULL);
@@ -411,6 +412,11 @@ int main()
 	simple_window_form form;
 	init_windows_form_system();
 	form.init_window(100,100,1280,720,L"h264 play test");
+
+	while (NULL == form.getdc())
+	{
+		::Sleep(20);
+	}
 	DWORD threadid;
 	HANDLE hthread = ::CreateThread(NULL,0,play_thread_proc,&form,0,&threadid);
 
